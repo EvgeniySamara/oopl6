@@ -1,8 +1,11 @@
-package ru.geekbrains.oop.lesson6.srp2;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectStreamException;
 import java.util.Scanner;
+import java.util.ArrayList;
+
+
 
 public class Order {
 
@@ -15,17 +18,22 @@ public class Order {
     public Order() {
     }
 
-    public void inputFromConsole(){
-        clientName = prompt("Имя клиента: ");
-        product = prompt("Продукт: ");
-        qnt = Integer.parseInt(prompt("Кол-во: "));
-        price = Integer.parseInt(prompt("Цена: "));
+       
+    public void set_clientName(String clientName) {
+         this.clientName = clientName;
     }
+    public void set_product(String product) {
+        this.product = product;
 
-    private String prompt(String message){
-        System.out.println(message);
-        return scanner.nextLine();
-    }
+        }
+        public void set_qnt(int qnt) {
+          this.qnt = qnt;
+            
+        }
+        public void set_price(int price) {
+          this.price = price;
+        }           
+
 
     public Order(String clientName, String product, int qnt, int price) {
         this.clientName = clientName;
@@ -34,19 +42,21 @@ public class Order {
         this.price = price;
     }
 
-    public void saveToJson() {
-        String fileName = "order.json";
-        try (FileWriter writer = new FileWriter(fileName, false)) {
-            writer.write("{\n");
-            writer.write("\"clientName\":\""+ clientName + "\",\n");
-            writer.write("\"product\":\""+product+"\",\n");
-            writer.write("\"qnt\":"+qnt+",\n");
-            writer.write("\"price\":"+price+"\n");
-            writer.write("}\n");
-            writer.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public ArrayList <String> getOrder() {
+        ArrayList<String> orderlist = new  ArrayList<> ();
+        orderlist.add(clientName);
+        orderlist.add(product);
+        orderlist.add(String.valueOf(qnt));
+        orderlist.add(String.valueOf(price));        
+        return orderlist; 
+        
     }
+
+@Override
+public String toString() {
+   
+    return String.format("Имя клиента %s продукт %s",clientName,product);
+}
+
 
 }
